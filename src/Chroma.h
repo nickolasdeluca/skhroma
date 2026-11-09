@@ -48,6 +48,76 @@ namespace Chroma
 		inline constexpr std::uint16_t LCTRL = 0x0501;
 		inline constexpr std::uint16_t LALT = 0x0503;
 		inline constexpr std::uint16_t SPACE = 0x0507;
+
+		// DirectInput scan code (what Skyrim's ControlMap stores) -> RZKEY. 0 = no LED for that key.
+		constexpr std::uint16_t FromDIK(std::uint32_t a_dik)
+		{
+			if (a_dik >= 0x02 && a_dik <= 0x0B) return static_cast<std::uint16_t>(0x0102 + (a_dik - 0x02));  // 1..0
+			if (a_dik >= 0x10 && a_dik <= 0x19) return static_cast<std::uint16_t>(0x0202 + (a_dik - 0x10));  // Q..P
+			if (a_dik >= 0x1E && a_dik <= 0x26) return static_cast<std::uint16_t>(0x0302 + (a_dik - 0x1E));  // A..L
+			if (a_dik >= 0x2C && a_dik <= 0x32) return static_cast<std::uint16_t>(0x0403 + (a_dik - 0x2C));  // Z..M
+			if (a_dik >= 0x3B && a_dik <= 0x44) return static_cast<std::uint16_t>(0x0003 + (a_dik - 0x3B));  // F1..F10
+			switch (a_dik) {
+			case 0x01: return 0x0001;  // Esc
+			case 0x0C: return 0x010C;  // -
+			case 0x0D: return 0x010D;  // =
+			case 0x0E: return 0x010E;  // Backspace
+			case 0x0F: return 0x0201;  // Tab
+			case 0x1A: return 0x020C;  // [
+			case 0x1B: return 0x020D;  // ]
+			case 0x1C: return 0x030E;  // Enter
+			case 0x1D: return 0x0501;  // LCtrl
+			case 0x27: return 0x030B;  // ;
+			case 0x28: return 0x030C;  // '
+			case 0x29: return 0x0101;  // `
+			case 0x2A: return 0x0401;  // LShift
+			case 0x2B: return 0x020E;  // backslash
+			case 0x33: return 0x040A;  // ,
+			case 0x34: return 0x040B;  // .
+			case 0x35: return 0x040C;  // /
+			case 0x36: return 0x040E;  // RShift
+			case 0x37: return 0x0114;  // Num *
+			case 0x38: return 0x0503;  // LAlt
+			case 0x39: return 0x0507;  // Space
+			case 0x3A: return 0x0301;  // CapsLock
+			case 0x45: return 0x0112;  // NumLock
+			case 0x46: return 0x0010;  // ScrollLock
+			case 0x47: return 0x0212;  // Num 7
+			case 0x48: return 0x0213;  // Num 8
+			case 0x49: return 0x0214;  // Num 9
+			case 0x4A: return 0x0115;  // Num -
+			case 0x4B: return 0x0312;  // Num 4
+			case 0x4C: return 0x0313;  // Num 5
+			case 0x4D: return 0x0314;  // Num 6
+			case 0x4E: return 0x0215;  // Num +
+			case 0x4F: return 0x0412;  // Num 1
+			case 0x50: return 0x0413;  // Num 2
+			case 0x51: return 0x0414;  // Num 3
+			case 0x52: return 0x0513;  // Num 0
+			case 0x53: return 0x0514;  // Num .
+			case 0x57: return 0x000D;  // F11
+			case 0x58: return 0x000E;  // F12
+			case 0x9C: return 0x0415;  // Num Enter
+			case 0x9D: return 0x050E;  // RCtrl
+			case 0xB5: return 0x0113;  // Num /
+			case 0xB7: return 0x000F;  // PrintScreen
+			case 0xB8: return 0x050B;  // RAlt
+			case 0xC5: return 0x0011;  // Pause
+			case 0xC7: return 0x0110;  // Home
+			case 0xC8: return 0x0410;  // Up
+			case 0xC9: return 0x0111;  // PageUp
+			case 0xCB: return 0x050F;  // Left
+			case 0xCD: return 0x0511;  // Right
+			case 0xCF: return 0x0210;  // End
+			case 0xD0: return 0x0510;  // Down
+			case 0xD1: return 0x0211;  // PageDown
+			case 0xD2: return 0x010F;  // Insert
+			case 0xD3: return 0x020F;  // Delete
+			case 0xDB: return 0x0502;  // LWin
+			case 0xDD: return 0x050D;  // Apps/Menu
+			default: return 0;
+			}
+		}
 	}
 
 	namespace Mouse

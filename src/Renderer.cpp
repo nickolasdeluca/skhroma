@@ -422,20 +422,25 @@ void Renderer::ComposeKeyboard(Chroma::Keyboard::CUSTOM_EFFECT_TYPE& a_kb)
 			}
 		}
 
-		// Movement keys.
-		const Color wasd = (_cfg.combat && _s.inCombat)       ? _cfg.combatColor :
-		                   (_s.StaminaPct() < _cfg.lowStamina) ? _cfg.stamina * (0.3f + 0.7f * Pulse(2.0f)) :
-		                                                         Lerp(at(W), Palette::White, 0.3f);
-		at(W) = at(A) = at(S) = at(D) = wasd;
+		// Movement keys, wherever the player bound them (WASD by default).
+		const std::uint16_t moveKeys[] = { FromDIK(_s.keyForward), FromDIK(_s.keyLeft), FromDIK(_s.keyBack), FromDIK(_s.keyRight) };
+		for (const auto rz : moveKeys) {
+			if (!rz) {
+				continue;
+			}
+			at(rz) = (_cfg.combat && _s.inCombat)       ? _cfg.combatColor :
+			         (_s.StaminaPct() < _cfg.lowStamina) ? _cfg.stamina * (0.3f + 0.7f * Pulse(2.0f)) :
+			                                               Lerp(at(rz), Palette::White, 0.3f);
+		}
 
-		// Shout key (Z): dim while recovering, bright gold when ready.
-		if (_cfg.shout) {
+		// Shout key (Z by default): dim while recovering, bright gold when ready.
+		if (const auto shoutKey = FromDIK(_s.keyShout); _cfg.shout && shoutKey) {
 			Color z = Palette::Shout;
 			if (_s.voiceRecovery > 0.0f) {
 				const float progress = _shoutCooldownMax > 0.0f ? 1.0f - _s.voiceRecovery / _shoutCooldownMax : 0.0f;
 				z = Lerp(Palette::Health * 0.15f, Palette::Shout * 0.5f, progress);
 			}
-			at(Z) = Screen(z, Palette::White, _shoutReadyFlash);
+			at(shoutKey) = Screen(z, Palette::White, _shoutReadyFlash);
 		}
 
 		// SunHelm meters on the numpad: columns = hunger, thirst, fatigue, cold; filled bottom-up.

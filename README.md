@@ -12,7 +12,7 @@ Works with Razer Synapse or any compatible `RzChromaSDK64.dll` (e.g. open-chroma
 
 | Device | Layout |
 |---|---|
-| Keyboard | F1–F4 Magicka · F5–F8 Health · F9–F12 Stamina · WASD combat/low stamina · Z shout cooldown · Numpad SunHelm meters (hunger, thirst, fatigue, cold) · ESC alarm |
+| Keyboard | F1–F4 Magicka · F5–F8 Health · F9–F12 Stamina · Movement keys combat/low stamina · Shout key cooldown (both follow your in-game bindings; WASD and Z by default) · Numpad SunHelm meters (hunger, thirst, fatigue, cold) · ESC alarm |
 | Mouse | Left strip Health · right strip Stamina · rest ambient |
 | Mousepad | Ring mirrors the HUD (Magicka / Health / Stamina) |
 | Keypad | 4 SunHelm meters + Health column |

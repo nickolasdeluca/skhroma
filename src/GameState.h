@@ -32,6 +32,13 @@ struct GameSnapshot
 	bool  bleedingOut{ false };
 	float voiceRecovery{ 0.0f };  // seconds remaining on shout cooldown
 
+	// Keyboard bindings from the game's control map, as DirectInput scan codes (W A S D Z by default).
+	std::uint32_t keyForward{ 0x11 };
+	std::uint32_t keyBack{ 0x1F };
+	std::uint32_t keyLeft{ 0x1E };
+	std::uint32_t keyRight{ 0x20 };
+	std::uint32_t keyShout{ 0x2C };
+
 	// Transformations / races
 	bool vampire{ false };
 	bool werewolf{ false };

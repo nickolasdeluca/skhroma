@@ -186,6 +186,22 @@ namespace
 				s.voiceRecovery = std::max(0.0f, process->high->voiceRecoveryTime);
 			}
 
+			auto* controls = RE::ControlMap::GetSingleton();
+			auto* events = RE::UserEvents::GetSingleton();
+			if (controls && events) {
+				const auto bind = [&](const RE::BSFixedString& a_event, std::uint32_t& a_out) {
+					const auto key = controls->GetMappedKey(a_event, RE::INPUT_DEVICE::kKeyboard);
+					if (key != RE::ControlMap::kInvalid) {
+						a_out = key;
+					}
+				};
+				bind(events->forward, s.keyForward);
+				bind(events->back, s.keyBack);
+				bind(events->strafeLeft, s.keyLeft);
+				bind(events->strafeRight, s.keyRight);
+				bind(events->shout, s.keyShout);
+			}
+
 			if (auto* race = player->GetRace()) {
 				s.werewolf = g_werewolfRace && race == g_werewolfRace;
 				s.vampireLord = g_vampireLordRace && race == g_vampireLordRace;
