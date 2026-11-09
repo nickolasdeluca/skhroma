@@ -1,0 +1,73 @@
+[center][size=6][b]Skhroma[/b][/size]
+[size=3]Razer Chroma lighting that reacts to Skyrim[/size][/center]
+
+Skhroma is an SKSE plugin that drives every Razer Chroma device from the game: your keyboard, mouse, mousepad, keypad, headset and Chroma Link lights react to your attributes, combat, weather, time of day, transformations, menus and survival needs.
+
+No .esp, no scripts, no plugin slot. Safe to install or remove mid-playthrough.
+
+[size=5][b]What reacts[/b][/size]
+
+[b]Keyboard[/b]
+[list]
+[*]F1-F4 Magicka, F5-F8 Health, F9-F12 Stamina
+[*]WASD glow in combat and fade when stamina is low
+[*]Z: shout cooldown (dim while recovering, gold when ready)
+[*]Numpad: SunHelm hunger, thirst, fatigue and cold meters
+[*]ESC: alarm
+[/list]
+[b]Mouse[/b]: left strip Health, right strip Stamina.
+[b]Mousepad[/b]: the ring mirrors the HUD (Magicka / Health / Stamina).
+[b]Keypad[/b]: the 4 SunHelm meters plus a Health column.
+[b]Headset / Chroma Link[/b]: ambient color and all global effects.
+
+[b]Global effects on every device[/b]
+[list]
+[*]Time-of-day and weather ambient: torchlight indoors, rain drops, snow flakes, lightning in storms
+[*]Combat embers, sneak, swimming
+[*]Werewolf, Vampire Lord and vampire tints
+[*]Low-health heartbeat, hit and block flashes
+[*]Level-up wave, dragon soul absorption, bleedout and death
+[*]SunHelm frost creeping in from the edges as you freeze
+[*]Menu dimming, with special looks for the map, lockpicking and sleep/wait
+[/list]
+
+[size=5][b]Requirements[/b][/size]
+[list]
+[*][url=https://skse.silverlock.org/]SKSE64[/url]
+[*][url=https://www.nexusmods.com/skyrimspecialedition/mods/32444]Address Library for SKSE Plugins[/url]
+[*]Razer Synapse with Chroma enabled (or another RzChromaSDK64.dll provider, such as open-chroma)
+[/list]
+[b]Optional[/b]
+[list]
+[*]SunHelm Survival: enables the hunger / thirst / fatigue / cold meters and the frost effect. Without it these layers simply stay off.
+[/list]
+
+[b]Compatibility:[/b] Skyrim SE 1.5.97 and AE 1.6.x (version independent through Address Library). Not for VR. Tested on Nolvus Awakening 6.
+
+[size=5][b]Installation[/b][/size]
+Install with Mod Organizer 2 or Vortex. Manual: extract into your Data folder.
+The archive contains only:
+[code]SKSE/Plugins/Skhroma.dll
+SKSE/Plugins/Skhroma.ini
+SKSE/Plugins/Skhroma.pdb[/code]
+The .pdb is optional; it lets crash loggers name Skhroma functions if something goes wrong.
+
+[size=5][b]Configuration[/b][/size]
+Everything can be toggled and tuned in [b]SKSE/Plugins/Skhroma.ini[/b]: each device, each effect, brightness, frame rate, "low" thresholds and the Health / Magicka / Stamina / Frost / Combat colors.
+
+[size=5][b]Troubleshooting[/b][/size]
+[list]
+[*]Log file: Documents/My Games/Skyrim Special Edition/SKSE/Skhroma.log
+[*]No lights? Check that Razer Synapse is running with Chroma Connect / app access enabled, and look for "Chroma SDK initialized" in the log.
+[*]Other apps fighting over the lights? Disable their Chroma integration while playing.
+[/list]
+
+[size=5][b]Source and license[/b][/size]
+Open source under the MIT license: [url=https://github.com/nickolasdeluca/skhroma]github.com/nickolasdeluca/skhroma[/url]
+
+[size=5][b]Credits[/b][/size]
+[list]
+[*]CommonLibSSE-NG and the SKSE team
+[*]meh321 for Address Library
+[*]Razer for the Chroma SDK
+[/list]
