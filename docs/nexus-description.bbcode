@@ -1,73 +1,90 @@
-[center][size=6][b]Skhroma[/b][/size]
-[size=3]Razer Chroma lighting that reacts to Skyrim[/size][/center]
+[size=5][b]Description[/b][/size]
+Skhroma brings Razer Chroma lighting to Skyrim. It is an SKSE plugin that turns every Chroma device you own (keyboard, mouse, mousepad, keypad, headset and Chroma Link) into an extension of the HUD and the world around you.
 
-Skhroma is an SKSE plugin that drives every Razer Chroma device from the game: your keyboard, mouse, mousepad, keypad, headset and Chroma Link lights react to your attributes, combat, weather, time of day, transformations, menus and survival needs.
+Your health, magicka and stamina live on your keyboard. The room glows with torchlight when you step indoors, snow drifts across the keys in a blizzard, embers creep in from the edges when a fight starts, and your whole desk pulses with a heartbeat when you are close to death.
 
-No .esp, no scripts, no plugin slot. Safe to install or remove mid-playthrough.
+It is pure SKSE: no .esp, no scripts, no plugin slot, no save bloat. You can add or remove it at any time, even mid-playthrough.
 
-[size=5][b]What reacts[/b][/size]
+[size=5][b]Installation instructions[/b][/size]
+[list=1]
+[*]Install the requirements below.
+[*]Install Skhroma with Mod Organizer 2 or Vortex. For a manual install, extract the archive into your Skyrim Data folder.
+[*]Make sure Razer Synapse is running with Chroma enabled before you launch the game.
+[*](Optional) Edit [b]SKSE/Plugins/Skhroma.ini[/b] to taste.
+[/list]
+The archive contains only:
+[code]SKSE/Plugins/Skhroma.dll
+SKSE/Plugins/Skhroma.ini
+SKSE/Plugins/Skhroma.pdb[/code]
+The .pdb is optional. It only helps crash loggers name Skhroma functions if something goes wrong.
 
+[b]Uninstall:[/b] disable or delete the mod. Nothing is stored in your save.
+
+[b]Troubleshooting[/b]
+[list]
+[*]Log: Documents/My Games/Skyrim Special Edition/SKSE/Skhroma.log
+[*]No lights? Check that Synapse is running and that the log says "Chroma SDK initialized".
+[*]Lights flickering between effects? Another app is also driving Chroma. Close it or turn off its Chroma integration while playing.
+[/list]
+
+[size=5][b]Main features[/b][/size]
 [b]Keyboard[/b]
 [list]
-[*]F1-F4 Magicka, F5-F8 Health, F9-F12 Stamina
-[*]WASD glow in combat and fade when stamina is low
-[*]Z: shout cooldown (dim while recovering, gold when ready)
+[*]F1-F4 Magicka, F5-F8 Health, F9-F12 Stamina: live bars that drain and refill
+[*]WASD light up in combat and fade when you run low on stamina
+[*]Z (shout): dim while recovering, gold when ready
 [*]Numpad: SunHelm hunger, thirst, fatigue and cold meters
-[*]ESC: alarm
+[*]ESC blinks red as an alarm when health is low or a SunHelm need becomes critical
 [/list]
-[b]Mouse[/b]: left strip Health, right strip Stamina.
-[b]Mousepad[/b]: the ring mirrors the HUD (Magicka / Health / Stamina).
-[b]Keypad[/b]: the 4 SunHelm meters plus a Health column.
-[b]Headset / Chroma Link[/b]: ambient color and all global effects.
+[b]Mouse:[/b] left strip shows Health, right strip shows Stamina.
+[b]Mousepad:[/b] the ring mirrors the HUD (Magicka / Health / Stamina).
+[b]Keypad:[/b] the four SunHelm meters plus a Health column.
+[b]Headset and Chroma Link:[/b] ambient color and every global effect.
 
-[b]Global effects on every device[/b]
+[b]World and events (on every device)[/b]
 [list]
-[*]Time-of-day and weather ambient: torchlight indoors, rain drops, snow flakes, lightning in storms
-[*]Combat embers, sneak, swimming
+[*]Time of day: dawn, daylight, dusk and night colors outdoors; warm torchlight indoors
+[*]Weather: clouds, rain drops, snow flakes and lightning flashes in thunderstorms
+[*]Combat embers, sneaking, swimming
 [*]Werewolf, Vampire Lord and vampire tints
-[*]Low-health heartbeat, hit and block flashes
-[*]Level-up wave, dragon soul absorption, bleedout and death
-[*]SunHelm frost creeping in from the edges as you freeze
-[*]Menu dimming, with special looks for the map, lockpicking and sleep/wait
+[*]Low-health heartbeat, red flash when hit, blue-white flash when blocking
+[*]Level-up wave and dragon soul absorption
+[*]Bleedout and death
+[*]SunHelm cold: frost creeps in from the edges as you freeze
+[*]Menus dim the lights, with special looks for the map, lockpicking and sleep/wait
 [/list]
+
+[b]Fully configurable[/b]
+Every device and every effect can be switched on or off in Skhroma.ini. You can also tune overall and ambient brightness, frame rate, what counts as "low" health / magicka / stamina, and the Health, Magicka, Stamina, Frost and Combat colors.
+
+[b]Lightweight[/b]
+Game state is sampled about 15 times per second on the main thread, and lighting runs on its own thread at 30 fps. The game never waits on Chroma.
 
 [size=5][b]Requirements[/b][/size]
 [list]
 [*][url=https://skse.silverlock.org/]SKSE64[/url]
 [*][url=https://www.nexusmods.com/skyrimspecialedition/mods/32444]Address Library for SKSE Plugins[/url]
-[*]Razer Synapse with Chroma enabled (or another RzChromaSDK64.dll provider, such as open-chroma)
+[*]Razer Synapse with Chroma enabled, or any other RzChromaSDK64.dll provider (for example open-chroma)
+[*]At least one Razer Chroma device
 [/list]
 [b]Optional[/b]
 [list]
-[*]SunHelm Survival: enables the hunger / thirst / fatigue / cold meters and the frost effect. Without it these layers simply stay off.
+[*][b]SunHelm Survival:[/b] enables the hunger, thirst, fatigue and cold meters and the frost effect. Skhroma detects it automatically. Without it these layers simply stay off.
+[*][b]Dawnguard[/b] (included in every SE/AE copy): enables the Vampire Lord look.
 [/list]
-
-[b]Compatibility:[/b] Skyrim SE 1.5.97 and AE 1.6.x (version independent through Address Library). Not for VR. Tested on Nolvus Awakening 6.
-
-[size=5][b]Installation[/b][/size]
-Install with Mod Organizer 2 or Vortex. Manual: extract into your Data folder.
-The archive contains only:
-[code]SKSE/Plugins/Skhroma.dll
-SKSE/Plugins/Skhroma.ini
-SKSE/Plugins/Skhroma.pdb[/code]
-The .pdb is optional; it lets crash loggers name Skhroma functions if something goes wrong.
-
-[size=5][b]Configuration[/b][/size]
-Everything can be toggled and tuned in [b]SKSE/Plugins/Skhroma.ini[/b]: each device, each effect, brightness, frame rate, "low" thresholds and the Health / Magicka / Stamina / Frost / Combat colors.
-
-[size=5][b]Troubleshooting[/b][/size]
+[b]Compatibility[/b]
 [list]
-[*]Log file: Documents/My Games/Skyrim Special Edition/SKSE/Skhroma.log
-[*]No lights? Check that Razer Synapse is running with Chroma Connect / app access enabled, and look for "Chroma SDK initialized" in the log.
-[*]Other apps fighting over the lights? Disable their Chroma integration while playing.
+[*]Skyrim SE 1.5.97 and AE 1.6.x (version independent through Address Library). Tested on Nolvus Awakening 6 (1.5.97). Not compatible with Skyrim VR.
+[*]Compatible with everything. It does not touch any records, meshes or scripts.
 [/list]
 
-[size=5][b]Source and license[/b][/size]
-Open source under the MIT license: [url=https://github.com/nickolasdeluca/skhroma]github.com/nickolasdeluca/skhroma[/url]
-
-[size=5][b]Credits[/b][/size]
+[size=5][b]Shout outs[/b][/size]
 [list]
-[*]CommonLibSSE-NG and the SKSE team
-[*]meh321 for Address Library
-[*]Razer for the Chroma SDK
+[*][b]The SKSE team[/b], for making plugins like this possible
+[*][b]CharmedBaryon and the CommonLibSSE-NG contributors[/b], for the library Skhroma is built on
+[*][b]meh321[/b], for Address Library
+[*][b]Razer[/b], for the Chroma SDK, and the [b]open-chroma[/b] project
+[*]The author of [b]SunHelm Survival[/b], for a survival mod worth lighting up
+[*][b]The Nolvus team[/b], for the modlist this was built and tested on
 [/list]
+Source code (MIT): [url=https://github.com/nickolasdeluca/skhroma]github.com/nickolasdeluca/skhroma[/url]

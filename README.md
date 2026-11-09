@@ -1,5 +1,9 @@
 # Skhroma
 
+**Download:** [Nexus Mods](https://www.nexusmods.com/skyrimspecialedition/mods/198505) · [GitHub Releases](https://github.com/nickolasdeluca/skhroma/releases)
+
+![Skhroma](docs/media/skhroma-nexus-1920x1080.png)
+
 Razer Chroma integration for Skyrim SE/AE as an SKSE plugin. Lights on every Chroma device react to the game: attributes, combat, damage, weather, time of day, transformations, menus and SunHelm survival needs (hunger, thirst, fatigue, cold).
 
 Works with Razer Synapse or any compatible `RzChromaSDK64.dll` (e.g. open-chroma). Built with CommonLibSSE-NG via Address Library, so the DLL runs on 1.5.97 (Nolvus) and 1.6.x.
