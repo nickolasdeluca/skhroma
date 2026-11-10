@@ -39,6 +39,9 @@ struct Config
 	bool menus{ true };
 	bool death{ true };
 
+	// [Debug]
+	bool verboseLog{ false };
+
 	// [Colors]
 	Color health{ Palette::Health };
 	Color magicka{ Palette::Magicka };

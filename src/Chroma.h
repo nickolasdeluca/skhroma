@@ -203,13 +203,53 @@ namespace Chroma
 		void Shutdown();
 		[[nodiscard]] bool IsReady() const { return _ready; }
 
-		// Pushes only devices whose content changed since the previous call.
+		// Pushes devices whose content changed since the previous call. Devices whose last
+		// push failed are retried every frame, and unchanged ones are refreshed once per
+		// KEEPALIVE in case the SDK accepted a frame but dropped it. If every device keeps
+		// failing, the SDK is shut down so the caller's Initialize() retry re-registers it.
 		void Submit(const Frame& a_frame, const DeviceMask& a_mask);
+
+		// Verbose diagnostics: logs every change in a device's SDK result code and
+		// periodic per-device send statistics (see LogStats).
+		void SetVerbose(bool a_verbose) { _verbose = a_verbose; }
+		void LogStats();
+
+		using RZRESULT = long;
+		static const char* ResultName(RZRESULT a_result);
 
 	private:
 		SDK() = default;
 
-		using RZRESULT = long;
+		using Clock = std::chrono::steady_clock;
+		static constexpr auto KEEPALIVE = 1s;
+		static constexpr auto REINIT_AFTER = 5s;    // all devices failing this long -> re-init
+		static constexpr auto REINIT_MAX = 60s;     // cap for the doubling re-init delay
+
+		enum Device : std::size_t
+		{
+			kKeyboard,
+			kMouse,
+			kMousepad,
+			kHeadset,
+			kKeypad,
+			kChromaLink,
+			kDeviceCount
+		};
+
+		struct DeviceStats
+		{
+			std::uint64_t sent{ 0 };
+			std::uint64_t failed{ 0 };
+			std::uint64_t skipped{ 0 };  // unchanged frames not re-sent
+			RZRESULT      lastResult{ 0 };
+			bool          hasResult{ false };
+			bool          lastOk{ false };
+			Clock::time_point lastSend{};
+		};
+
+		void Record(Device a_device, RZRESULT a_result);
+		[[nodiscard]] bool Quiet() const { return _reinits > 3; }
+
 		using InitFn = RZRESULT (*)();
 		using UnInitFn = RZRESULT (*)();
 		using CreateFn = RZRESULT (*)(int a_effect, void* a_param, void* a_effectId);
@@ -225,6 +265,12 @@ namespace Chroma
 		CreateFn _chromaLink{ nullptr };
 		bool     _ready{ false };
 		bool     _loggedLoadFailure{ false };
+		bool     _verbose{ false };
+
+		std::array<DeviceStats, kDeviceCount> _stats{};
+
+		std::optional<Clock::time_point> _allFailingSince;
+		int                              _reinits{ 0 };  // consecutive re-inits without a successful push
 
 		Frame _last{};
 		bool  _hasLast{ false };

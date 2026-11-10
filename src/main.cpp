@@ -51,7 +51,15 @@ SKSEPluginLoad(const SKSE::LoadInterface* a_skse)
 	const auto runtime = REL::Module::get().version();
 	logger::info("{} v{}.{}.{} loading (Skyrim {})", PLUGIN_NAME, PLUGIN_VERSION_MAJOR, PLUGIN_VERSION_MINOR, PLUGIN_VERSION_PATCH, runtime.string());
 
-	Config::Get().Load("Data/SKSE/Plugins/" PLUGIN_NAME ".ini");
+	auto& config = Config::Get();
+	config.Load("Data/SKSE/Plugins/" PLUGIN_NAME ".ini");
+	if (config.verboseLog) {
+		if (auto log = spdlog::default_logger()) {
+			log->set_level(spdlog::level::debug);
+			log->flush_on(spdlog::level::debug);
+		}
+		Chroma::SDK::Get().SetVerbose(true);
+	}
 
 	if (!SKSE::GetMessagingInterface()->RegisterListener(OnMessage)) {
 		logger::critical("Failed to register SKSE messaging listener.");

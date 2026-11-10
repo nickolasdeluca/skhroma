@@ -175,10 +175,12 @@ void Config::Load(const std::filesystem::path& a_path)
 	ini.Hex("Colors.sFrost", frost);
 	ini.Hex("Colors.sCombat", combatColor);
 
+	ini.Bool("Debug.bVerboseLog", verboseLog);
+
 	fps = std::clamp(fps, 5, 60);
 	sampleIntervalMs = std::clamp(sampleIntervalMs, 16, 1000);
 	brightness = std::clamp(brightness, 0.0f, 1.0f);
 	ambientBrightness = std::clamp(ambientBrightness, 0.0f, 1.0f);
 
-	logger::info("Config loaded from {} (fps={}, sample={}ms, brightness={:.2f})", a_path.string(), fps, sampleIntervalMs, brightness);
+	logger::info("Config loaded from {} (fps={}, sample={}ms, brightness={:.2f}, verboseLog={})", a_path.string(), fps, sampleIntervalMs, brightness, verboseLog);
 }

@@ -8,8 +8,10 @@
 int main()
 {
 	spdlog::set_default_logger(spdlog::stdout_color_mt("chroma_test"));
+	spdlog::set_level(spdlog::level::debug);
 
 	auto& sdk = Chroma::SDK::Get();
+	sdk.SetVerbose(true);
 	for (int attempt = 0; attempt < 5 && !sdk.Initialize(); ++attempt) {
 		std::this_thread::sleep_for(1s);
 	}
@@ -49,6 +51,7 @@ int main()
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / FPS));
 	}
 
+	sdk.LogStats();
 	spdlog::info("Done.");
 	sdk.Shutdown();
 	return 0;

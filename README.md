@@ -57,6 +57,8 @@ To build straight into an MO2 mod folder, create a `CMakeUserPresets.json` (git-
 
 `Documents/My Games/Skyrim Special Edition/SKSE/Skhroma.log`
 
+The log always records the full path of the `RzChromaSDK64.dll` that was loaded and whether the SDK accepted the first effect sent to each device. Set `bVerboseLog = 1` under `[Debug]` in `Skhroma.ini` to also log every change in the SDK result code per device and send statistics every 10 seconds.
+
 ## License
 
 [MIT](LICENSE). Built on [CommonLibSSE-NG](https://github.com/CharmedBaryon/CommonLibSSE-NG) (MIT).

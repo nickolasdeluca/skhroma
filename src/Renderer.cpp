@@ -69,6 +69,7 @@ void Renderer::Loop()
 	auto lastFrame = clock::now();
 	auto lastSample = clock::time_point{};
 	auto nextInitTry = clock::time_point{};
+	auto nextStats = clock::time_point{};
 
 	Chroma::Frame frame{};
 
@@ -83,6 +84,7 @@ void Renderer::Loop()
 			}
 			std::this_thread::sleep_for(250ms);
 			lastFrame = clock::now();
+			nextStats = lastFrame + 10s;  // first stats 10 s after (re)init, once frames have been sent
 			continue;
 		}
 
@@ -97,6 +99,19 @@ void Renderer::Loop()
 		_prev = _s;
 		_s = GameState::GetSnapshot();
 		Update(dt);
+
+		if (_cfg.verboseLog) {
+			if (_s.valid != _prev.valid) {
+				logger::debug("Game state: {}.", _s.valid ? "in game (player loaded)" : "not in game (main menu/loading)");
+			}
+			if (now >= nextStats) {
+				if (!_cfg.enabled) {
+					logger::debug("Stats: output disabled by bEnabled = 0.");
+				}
+				sdk.LogStats();
+				nextStats = now + 10s;
+			}
+		}
 
 		if (_cfg.enabled) {
 			Compose(frame);
